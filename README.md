@@ -3,7 +3,7 @@ Cloud APIs
 
 # User Setup
 
-Each institution is assigned a token that is used to uniquely identify a subscription.
+Each institution is assigned a token (customer ID) that is used to uniquely identify a subscription.
 An "institution" can contain one or more users and own one or more ultrasound scanners.
 
 Once a subscription is enabled on the Clarius Cloud, institution users can obtain the token as follows:
@@ -15,7 +15,7 @@ Once a subscription is enabled on the Clarius Cloud, institution users can obtai
 
 # Notifications
 
-If you wish to receive real-time notifications whenever one of your customers uploads an exam, you can register a notification webhook.
+If you wish to receive real-time notifications whenever one of your customers uploads an exam, you can [register a notification webhook](#managing-api-keys-and-notification-webhooks).
 
 ## Webhook requirements
 
@@ -38,7 +38,7 @@ Notification payload contains the uploaded exam's UUID, ID of the customer who u
 
 # Poll API
 
-***Requires API key***
+[***Requires API key***](#managing-api-keys-and-notification-webhooks)
 
 ```
 GET https://cloud.clarius.com/api/public/v0/exams/accessible/
@@ -91,7 +91,7 @@ Results can be filtered by query parameters:
 
 # Download API
 
-***Requires API key***
+[***Requires API key***](#managing-api-keys-and-notification-webhooks)
 
 ```
 GET https://cloud.clarius.com/api/public/v0/exams/[exam uuid]/data/
@@ -126,3 +126,7 @@ TBD
     ]
 }
 ```
+
+# Managing API keys and notification webhooks
+
+As there's currently no UI for managing your Cloud API usage, to obtain API keys or register a notification webhook, you have to contact us.
