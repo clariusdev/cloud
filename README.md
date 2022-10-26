@@ -3,15 +3,15 @@ Cloud APIs
 
 # User Setup
 
-Each institution is assigned a token (customer ID) that is used to uniquely identify a subscription.
+Each member of an institution is assigned a token (customer ID) that uniquely identifies a user of your service.
 An "institution" can contain one or more users and own one or more ultrasound scanners.
 
 Once a subscription is enabled on the Clarius Cloud, institution users can obtain the token as follows:
 
-1. Login to Clarius Cloud with an Administrator account
-1. Go to **Institution Settings**
-1. Choose **Service Subscriptions** from the menu
-1. Copy the token associated with your service
+1. Login to Clarius Cloud
+1. Go to **Profile**
+1. Choose **Services** from the menu
+1. Copy the token associated with your institution's service subscription
 
 # Notifications
 
@@ -24,7 +24,7 @@ If you wish to receive real-time notifications whenever one of your customers up
 
 ## Notification payload
 
-Notification payload contains the uploaded exam's UUID, ID of the customer who uploaded the exam and a URL where this exam's data can be retrieved.
+Notification payload contains the uploaded exam's UUID, ID of the customer who uploaded the exam, a URL where this exam's data can be retrieved and a timestamp when the user submitted this exam.
 
 ### Example:
 
@@ -32,7 +32,8 @@ Notification payload contains the uploaded exam's UUID, ID of the customer who u
 {
     "exam_uuid": "00000000-0000-0000-0000-000000000000",
     "customer_id": "eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY",
-    "download_url": "https://cloud.clarius.com/api/public/v0/exams/00000000-0000-0000-0000-000000000000/data/",
+    "download_url": "https://cloud.clarius.com/api/public/v0/exams/00000000-0000-0000-0000-000000000000/customers/eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY/data/",
+    "submitted_at": "2022-10-22T03:10:47.231755Z",
 }
 ```
 
@@ -77,12 +78,14 @@ Results can be filtered by query parameters:
         {
             "exam_uuid": "00000000-0000-0000-0000-000000000000",
             "customer_id": "eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY",
-            "download_url": "https://cloud.clarius.com/api/public/v0/exams/00000000-0000-0000-0000-000000000000/data/",
+            "download_url": "https://cloud.clarius.com/api/public/v0/exams/00000000-0000-0000-0000-000000000000/customers/eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY/data/",
+            "submitted_at": "2022-10-22T03:10:47.231755Z",
         }
         {
             "exam_uuid": "00000000-0000-0000-0000-000000000001",
             "customer_id": "eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY",
-            "download_url": "https://cloud.clarius.com/api/public/v0/exams/00000000-0000-0000-0000-000000000001/data/",
+            "download_url": "https://cloud.clarius.com/api/public/v0/exams/00000000-0000-0000-0000-000000000001/customers/eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY/data/",
+            "submitted_at": "2022-10-22T01:35:22.157454Z"
         }
     ]
 }
@@ -94,7 +97,7 @@ Results can be filtered by query parameters:
 [***Requires API key***](#managing-api-keys-and-notification-webhooks)
 
 ```
-GET https://cloud.clarius.com/api/public/v0/exams/[exam uuid]/data/
+GET https://cloud.clarius.com/api/public/v0/exams/[exam uuid]/customers/[customer id]/data/
 ```
 
 TBD
