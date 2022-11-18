@@ -6,12 +6,24 @@ Cloud APIs
 Each member of an institution is assigned a token (customer ID) that uniquely identifies a user of your service.
 An "institution" can contain one or more users and own one or more ultrasound scanners.
 
-Once a subscription is enabled on the Clarius Cloud, institution users can obtain the token as follows:
+## Requirements
+
+1. Provide us with a URL where we can pass the user token. The URL should allow the user to log in so you can associate the token with their account. For example:  
+```
+GET https://example.com?token=user_token_goes_here
+```
+2. Once the user is logged in and the token is successfully stored, notify us by calling the [Customer Confirmation API](#customer-confirmation-api).
+
+## User workflow
+
+Once a subscription is enabled on the Clarius Cloud, institution users pass their token to your service as follows:
 
 1. Login to Clarius Cloud
 1. Go to **Profile**
 1. Choose **Services** from the menu
-1. Copy the token associated with your institution's service subscription
+1. Find their institution's service subscription and click **Connect**
+1. Proceed to the service login page
+1. Log into their service account
 
 # Notifications
 
@@ -129,6 +141,31 @@ TBD
     ]
 }
 ```
+
+
+# Customer Confirmation API
+
+[***Requires API key***](#managing-api-keys-and-notification-webhooks)
+
+```
+POST https://cloud.clarius.com/api/public/v0/services/customer-confirmations/
+{
+    "token": "my customer token"
+}
+```
+Used for notifying us that you've successfully associated our token with an account.
+
+### Example Payload
+```json
+{
+    "token": "eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY"
+}
+```
+
+### Response
+Status codes
+* 200 if successfully confirmed integration.
+* 404 if a customer with this token does not exist.
 
 # Managing API keys and notification webhooks
 
