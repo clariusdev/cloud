@@ -27,7 +27,7 @@ Once a subscription is enabled on the Clarius Cloud, institution users pass thei
 
 # Notifications
 
-If you wish to receive real-time notifications whenever one of your customers uploads an exam, you can [register a notification webhook](#managing-api-keys-and-notification-webhooks).
+If you wish to receive real-time notifications whenever one of your customers uploads an exam, you can [register a notification webhook](#api-key-authentication).
 
 ## Webhook requirements
 
@@ -51,7 +51,7 @@ Notification payload contains the uploaded exam's UUID, ID of the customer who u
 
 # Poll API
 
-[***Requires API key***](#managing-api-keys-and-notification-webhooks)
+[***Requires API key***](#api-key-authentication)
 
 ```
 GET https://cloud.clarius.com/api/public/v0/exams/accessible/
@@ -106,7 +106,7 @@ Results can be filtered by query parameters:
 
 # Download API
 
-[***Requires API key***](#managing-api-keys-and-notification-webhooks)
+[***Requires API key***](#api-key-authentication)
 
 ```
 GET https://cloud.clarius.com/api/public/v0/exams/[exam uuid]/customers/[customer id]/data/
@@ -145,7 +145,7 @@ TBD
 
 # Customer Confirmation API
 
-[***Requires API key***](#managing-api-keys-and-notification-webhooks)
+[***Requires API key***](#api-key-authentication)
 
 ```
 POST https://cloud.clarius.com/api/public/v0/services/customer-confirmations/
@@ -166,6 +166,15 @@ Used for notifying us that you've successfully associated our token with an acco
 Status codes
 * 200 if successfully confirmed integration.
 * 404 if a customer with this token does not exist.
+
+# API key authentication
+
+Include your API key in the [Authorization header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization) with the `Service-API-Key` keyword.
+
+For example:
+```
+Authorization: Service-API-Key Q4nmtzH5.mvIzWOlklcrFJ3iWaJTFESYCzCe8j6TQ
+```
 
 # Managing API keys and notification webhooks
 
