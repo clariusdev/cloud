@@ -167,6 +167,43 @@ Status codes
 * 200 if successfully confirmed integration.
 * 404 if a customer with this token does not exist.
 
+# Active Tokens API
+
+[***Requires API key***](#api-key-authentication)
+
+```
+GET https://cloud.clarius.com/api/public/v0/services/confirmed-tokens/
+```
+Returns a paginated list of tokens for all confirmed users.
+
+### Pagination
+
+#### Parameters
+
+* `limit` (default: 10000) - maximum number of results per page
+* `offset` - pagination offset
+
+#### Response
+
+* "count" - total number of items in the response
+* "next" - URL to the next page or `null` if this is the last page
+* "previous" - URL to the previous page or `null` if this is the first page
+* "results" - paginated data
+
+### Example response
+
+```json
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+        "eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY",
+        "GEMoSRSC5nQTjicaQHE2L_0_HTaPwyjsIs86R6khqHc"
+    ]
+}
+```
+
 # API key authentication
 
 Include your API key in the [Authorization header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization) with the `Service-API-Key` keyword.
