@@ -36,15 +36,16 @@ If you wish to receive real-time notifications whenever one of your customers up
 
 ## Notification payload
 
-Notification payload contains the uploaded exam's UUID, ID of the customer who uploaded the exam, a URL where this exam's data can be retrieved and a timestamp when the user submitted this exam.
+Notification payload contains the uploaded exam's UUID, ID of the customer who uploaded the exam, a URL where this exam's data can be retrieved, a UUID of this submission (request) and a timestamp when the user submitted this exam.
 
 ### Example:
 
 ```json
 {
-    "exam_uuid": "00000000-0000-0000-0000-000000000000",
+    "request_uuid": "cf1b649c-428a-4cc2-b726-066f8a8c31a7",
+    "exam_uuid": "418c1f0f-4dd5-4c65-ae68-1fe8eccf46e5",
     "customer_id": "eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY",
-    "download_url": "https://cloud.clarius.com/api/public/v0/exams/00000000-0000-0000-0000-000000000000/customers/eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY/data/",
+    "download_url": "https://cloud.clarius.com/api/public/v0/download-requests/cf1b649c-428a-4cc2-b726-066f8a8c31a7/data/",
     "submitted_at": "2022-10-22T03:10:47.231755Z",
 }
 ```
@@ -57,7 +58,7 @@ Notification payload contains the uploaded exam's UUID, ID of the customer who u
 GET https://cloud.clarius.com/api/public/v0/exams/accessible/
 ```
 
-The poll API returns all accessible exams in the [notification payload format](#notification-payload).
+The poll API returns all accessible exam downloads in the [notification payload format](#notification-payload).
 
 ### Filters
 
@@ -88,15 +89,17 @@ Results can be filtered by query parameters:
     "previous": null,
     "results": [
         {
-            "exam_uuid": "00000000-0000-0000-0000-000000000000",
+            "request_uuid": "5ac5e0e3-92bd-4b55-8250-c03296a12872",
+            "exam_uuid": "440648a3-435f-4053-942b-17509c0787c1",
             "customer_id": "eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY",
-            "download_url": "https://cloud.clarius.com/api/public/v0/exams/00000000-0000-0000-0000-000000000000/customers/eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY/data/",
+            "download_url": "https://cloud.clarius.com/api/public/v0/exams/download-requests/5ac5e0e3-92bd-4b55-8250-c03296a12872/data/",
             "submitted_at": "2022-10-22T03:10:47.231755Z",
         }
         {
-            "exam_uuid": "00000000-0000-0000-0000-000000000001",
+            "request_uuid": "8cc97ac4-ad8d-4fed-a70e-967703ebe521",
+            "exam_uuid": "440648a3-435f-4053-942b-17509c0787c1",
             "customer_id": "eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY",
-            "download_url": "https://cloud.clarius.com/api/public/v0/exams/00000000-0000-0000-0000-000000000001/customers/eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY/data/",
+            "download_url": "https://cloud.clarius.com/api/public/v0/exams/download-requests/8cc97ac4-ad8d-4fed-a70e-967703ebe521/data/",
             "submitted_at": "2022-10-22T01:35:22.157454Z"
         }
     ]
@@ -109,13 +112,14 @@ Results can be filtered by query parameters:
 [***Requires API key***](#api-key-authentication)
 
 ```
-GET https://cloud.clarius.com/api/public/v0/exams/[exam uuid]/customers/[customer id]/data/
+GET https://cloud.clarius.com/api/public/v0/exams/download-requests/[request uuid]/data/
 ```
 
 TBD
 
 ### Current response
 
+* "request_uuid" - UUID of the customer's request
 * "patient" - patient data, possible fields:
   * "identifier"
   * "date_of_birth"
@@ -130,6 +134,7 @@ TBD
 
 ```json
 {
+    "request_uuid": "f037679c-6ed2-46cd-b2dc-f4abe52e5b52",
     "patient": {
         "identifier": "12345",
         "date_of_birth": "1970-01-01"
