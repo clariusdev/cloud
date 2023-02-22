@@ -209,6 +209,19 @@ Returns a paginated list of tokens for all confirmed users.
 }
 ```
 
+# Report Upload API
+
+[***Requires API key***](#api-key-authentication)
+
+```
+PUT https://cloud.clarius.com/api/public/v0/services/requests/[request uuid]/report/
+```
+Optionally, upload a report file associated with a user request. The report will be viewable in the "Services" modal on the exam page.
+
+#### Parameters
+
+* `file` - the file to upload (note: your Content-Type should be `multipart/form-data`)
+
 # API key authentication
 
 Include your API key in the [Authorization header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization) with the `Service-API-Key` keyword.
