@@ -8,7 +8,7 @@ An "institution" can contain one or more users and own one or more ultrasound sc
 
 ## Requirements
 
-1. Provide us with a URL where we can pass the user token. The URL should allow the user to log in so you can associate the token with their account. For example:  
+1. Using the [settings update API](#settings-viewupdate-api), provide us with a URL where we can pass the user token. The URL should allow the user to log in so you can associate the token with their account. For example:  
 ```
 GET https://example.com?token=user_token_goes_here
 ```
@@ -27,7 +27,7 @@ Once a subscription is enabled on the Clarius Cloud, institution users pass thei
 
 # Notifications
 
-If you wish to receive real-time notifications whenever one of your customers uploads an exam, you can [register a notification webhook](#api-key-authentication).
+If you wish to receive real-time notifications whenever one of your customers uploads an exam, you can register a notification webhook using the [settings update API](#settings-viewupdate-api).
 
 ## Webhook requirements
 
@@ -222,6 +222,32 @@ Optionally, upload a report file associated with a user request. The report will
 
 * `file` - the file to upload (note: your Content-Type should be `multipart/form-data`)
 
+
+# Settings View/Update API
+
+[***Requires API key***](#api-key-authentication)
+
+```
+GET https://cloud.clarius.com/api/public/v0/services/settings/
+```
+Returns your settings
+
+```
+PATCH https://cloud.clarius.com/api/public/v0/services/settings/
+```
+Allows updating your settings
+
+### Allowed fields
+* "notification_url" - a valid URL or an empty string
+* "token_transfer_url" - a valid URL containing the string `{token}` anywhere in the URL, or an empty string
+
+### Example Payload
+```json
+{
+    "token_transfer_url": "https://example.com/{token}/"
+}
+```
+
 # API key authentication
 
 Include your API key in the [Authorization header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization) with the `Service-API-Key` keyword.
@@ -231,6 +257,6 @@ For example:
 Authorization: Service-API-Key Q4nmtzH5.mvIzWOlklcrFJ3iWaJTFESYCzCe8j6TQ
 ```
 
-# Managing API keys and notification webhooks
+# Managing API keys
 
-As there's currently no UI for managing your Cloud API usage, to obtain API keys or register a notification webhook, you have to contact us.
+Contact us to manage your API keys.
