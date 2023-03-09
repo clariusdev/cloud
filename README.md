@@ -248,6 +248,67 @@ Allows updating your settings
 }
 ```
 
+# List active API keys
+
+[***Requires API key***](#api-key-authentication)
+
+```
+GET https://cloud.clarius.com/api/public/v0/services/api-keys/
+```
+
+### Example response
+
+```json
+[
+    {
+        "prefix": "QUgDR6JB",
+        "name": "My key",
+        "created": "2022-08-31T23:28:55.587755Z"
+    }
+]
+```
+
+# Create API key
+
+[***Requires API key***](#api-key-authentication)
+
+```
+POST https://cloud.clarius.com/api/public/v0/services/api-keys/
+{
+    "name": "My new api key"
+}
+```
+
+Creates new API keys. Note: __it is not possible to retrieve the key after it's been created so store it somewhere safe.__
+
+### Example Payload
+```json
+{
+    "name": "My new api key"
+}
+```
+
+### Example Response
+
+```json
+{
+    "prefix": "ghhni3x8",
+    "name": "My new api key",
+    "created": "2023-03-09T01:35:32.639396Z",
+    "key": "ghhni3x8.aToALr2FC8A7toD11Cj902BLtTuLSZEr"
+}
+```
+
+# Revoke API key
+
+[***Requires API key***](#api-key-authentication)
+
+```
+DELETE https://cloud.clarius.com/api/public/v0/services/api-keys/[key prefix]/
+```
+
+Note: it is not possible to revoke the key you're using to authenticate.
+
 # API key authentication
 
 Include your API key in the [Authorization header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization) with the `Service-API-Key` keyword.
@@ -259,4 +320,6 @@ Authorization: Service-API-Key Q4nmtzH5.mvIzWOlklcrFJ3iWaJTFESYCzCe8j6TQ
 
 # Managing API keys
 
-Contact us to manage your API keys.
+Onboarding is currently a manual process. We will provide you with the initial API key.
+
+For rotating API keys, use [Create](#create-api-key) and [Revoke](#revoke-api-key) APIs.
