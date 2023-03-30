@@ -214,12 +214,13 @@ Returns a paginated list of tokens for all confirmed users.
 [***Requires API key***](#api-key-authentication)
 
 ```
-PUT https://cloud.clarius.com/api/public/v0/services/requests/[request uuid]/report/
+POST https://cloud.clarius.com/api/public/v0/services/requests/[request uuid]/reports/
 ```
-Optionally, upload a report file associated with a user request. The report will be viewable in the "Services" modal on the exam page.
+Optionally, upload one or more report files associated with a user request. Reports will be viewable in the "Services" modal on the exam page.
 
 #### Parameters
 
+* `name` - user-friendly name describing the report. The name will be shown to the user in the "Services" modal.
 * `file` - the file to upload (note: your Content-Type should be `multipart/form-data`)
 
 
