@@ -34,6 +34,10 @@ If you wish to receive real-time notifications whenever one of your customers up
 * Accepts a POST request
 * Does not require authentication
 
+Upon receiving the notification, make sure to acknowledge it by responding with a 2xx status code. Later, asynchronously retrieve the data by following the download URL.
+
+⚠️ If you process the data synchronosly before responding to the notification, it can take a lot of time and the request might time out on our end. So, even if you've successfully received the notification, from our side it would look like a failure. Currently, we do not implement notification retries but, in the future, we might.
+
 ## Notification payload
 
 Notification payload contains the uploaded exam's UUID, ID of the customer who uploaded the exam, a URL where this exam's data can be retrieved, a UUID of this submission (request) and a timestamp when the user submitted this exam.
