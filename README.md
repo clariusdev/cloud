@@ -8,7 +8,7 @@ An "institution" can contain one or more users and own one or more ultrasound sc
 
 ## Requirements
 
-1. Using the [settings update API](#settings-viewupdate-api), provide us with a URL where we can pass the user token. The URL should allow the user to log in so you can associate the token with their account. For example:  
+1. Using the [settings update API](#settings-viewupdate-api), provide us with a URL where we can pass the user token. The URL should allow the user to log in so you can associate the token with their account. For example:
 ```
 GET https://example.com?token=user_token_goes_here
 ```
@@ -54,7 +54,9 @@ Notification payload contains the uploaded exam's UUID, ID of the customer who u
 }
 ```
 
-# Poll API
+# API
+
+## Poll API
 
 [***Requires API key***](#api-key-authentication)
 
@@ -111,7 +113,7 @@ Results can be filtered by query parameters:
 ```
 
 
-# Download API
+## Download API
 
 [***Requires API key***](#api-key-authentication)
 
@@ -119,9 +121,11 @@ Results can be filtered by query parameters:
 GET https://cloud.clarius.com/api/public/v0/exams/download-requests/[request uuid]/data/
 ```
 
-TBD
+Download API is meant to be accessed through "download_url" and not directly. It is not recommended to build the download URL manually as the format may change.
 
-### Current response
+### Response
+
+Response may vary based on data you need from us and can be reconfigured on request. This is an example of what it may look like:
 
 * "request_uuid" - UUID of the customer's request
 * "patient" - patient data, possible fields:
@@ -152,7 +156,7 @@ TBD
 ```
 
 
-# Customer Confirmation API
+## Customer Confirmation API
 
 [***Requires API key***](#api-key-authentication)
 
@@ -176,7 +180,7 @@ Status codes
 * 200 if successfully confirmed integration.
 * 404 if a customer with this token does not exist.
 
-# Active Tokens API
+## Active Tokens API
 
 [***Requires API key***](#api-key-authentication)
 
@@ -213,7 +217,7 @@ Returns a paginated list of tokens for all confirmed users.
 }
 ```
 
-# Report Upload API
+## Report Upload API
 
 [***Requires API key***](#api-key-authentication)
 
@@ -228,7 +232,7 @@ Optionally, upload one or more report files associated with a user request. Repo
 * `file` - the file to upload (note: your Content-Type should be `multipart/form-data`)
 
 
-# Settings View/Update API
+## Settings View/Update API
 
 [***Requires API key***](#api-key-authentication)
 
@@ -253,7 +257,7 @@ Allows updating your settings
 }
 ```
 
-# List active API keys
+## List Active API keys
 
 [***Requires API key***](#api-key-authentication)
 
@@ -273,7 +277,7 @@ GET https://cloud.clarius.com/api/public/v0/services/api-keys/
 ]
 ```
 
-# Create API key
+## Create API key
 
 [***Requires API key***](#api-key-authentication)
 
@@ -304,7 +308,7 @@ Creates new API keys. Note: __it is not possible to retrieve the key after it's 
 }
 ```
 
-# Revoke API key
+## Revoke API key
 
 [***Requires API key***](#api-key-authentication)
 
@@ -313,6 +317,134 @@ DELETE https://cloud.clarius.com/api/public/v0/services/api-keys/[key prefix]/
 ```
 
 Note: it is not possible to revoke the key you're using to authenticate.
+
+## View Clarius Cloud Applications
+
+[***Requires API key***](#api-key-authentication)
+
+```
+GET https://cloud.clarius.com/api/public/v0/exams/applications/
+```
+
+Retrieve a list of applications we have on Clarius Cloud.
+
+### Example response
+
+```json
+[
+    {
+        "uuid": "9f9531da-84a7-4149-8d59-c4c86c0afaa3",
+        "name": "Abdomen"
+    },
+    {
+        "uuid": "2e79155f-811c-4d29-9b49-807b20013518",
+        "name": "Cardiac"
+    },
+    {
+        "uuid": "643395dc-6786-4c90-9012-565fd23ae71a",
+        "name": "Bladder"
+    }
+]
+```
+
+## Customize Applications
+
+A set of APIs to manage customizations of exam applications for your users.
+
+### List customized applications
+
+[***Requires API key***](#api-key-authentication)
+
+```
+GET https://cloud.clarius.com/api/public/v0/services/applications/
+```
+
+#### Example response
+
+```json
+[
+    {
+        "uuid": "2e79155f-811c-4d29-9b49-807b20013518",
+        "name": "Cardiac",
+        "annotations": [
+            {
+                "title": "Our special annotations",
+                "labels": [
+                    "LABEL1",
+                    "LABEL2"
+                ],
+                "linked": false
+            }
+        ]
+    }
+]
+```
+
+### Retrieve customized application
+
+[***Requires API key***](#api-key-authentication)
+
+```
+GET https://cloud.clarius.com/api/public/v0/services/applications/[application uuid]/
+```
+
+#### Example response
+
+```json
+{
+    "uuid": "2e79155f-811c-4d29-9b49-807b20013518",
+    "name": "Cardiac",
+    "annotations": [
+        {
+            "title": "Our special annotations",
+            "labels": [
+                "LABEL1",
+                "LABEL2"
+            ],
+            "linked": false
+        }
+    ]
+}
+```
+
+### Create/Update application customizations
+
+[***Requires API key***](#api-key-authentication)
+
+```
+PUT https://cloud.clarius.com/api/public/v0/services/applications/[application uuid]/
+```
+
+#### Parameters
+* `annotations` - a list of annotations you would like your users to use in the Clarius Ultrasound app. Each item on the list must contain the following fields:
+  * `title` - string
+  * `labels` - list of strings
+  * `linked` - true/false boolean. Labels in linked categories are combined together in a unique label.
+
+#### Example payload
+
+```json
+{
+    "annotations": [
+        {
+            "title": "Our special annotations",
+            "labels": [
+                "LABEL1",
+                "LABEL2"
+            ],
+            "linked": false
+        }
+    ]
+}
+```
+
+### Remove application customizations
+
+[***Requires API key***](#api-key-authentication)
+
+```
+DELETE https://cloud.clarius.com/api/public/v0/services/applications/[application uuid]/
+```
 
 # API key authentication
 
