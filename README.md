@@ -29,6 +29,8 @@ Once a subscription is enabled on the Clarius Cloud, institution users pass thei
 
 If you wish to receive real-time notifications whenever one of your customers uploads an exam, you can register a notification webhook using the [settings update API](#settings-viewupdate-api).
 
+To assist with integration and debugging, we log every time we call your webhook. You can view these records at the [Notification Records API](#notification-records-api).
+
 ## Webhook requirements
 
 * Accepts a POST request
@@ -121,7 +123,7 @@ Results can be filtered by query parameters:
 GET https://cloud.clarius.com/api/public/v0/exams/download-requests/[request uuid]/data/
 ```
 
-Download API is meant to be accessed through "download_url" and not directly. It is not recommended to build the download URL manually as the format may change.
+⚠️ Download API is meant to be accessed through "download_url" and not directly. It is not recommended to build the download URL manually as the format may change.
 
 ### Response
 
@@ -257,6 +259,56 @@ Allows updating your settings
 }
 ```
 
+## Notification Records API
+
+[***Requires API key***](#api-key-authentication)
+
+```
+GET https://cloud.clarius.com/api/public/v0/services/notifications/records/
+```
+Returns a paginated list of notification webhook records.
+
+⚠️ Records are deleted after 14 days.
+
+### Pagination
+
+#### Parameters
+
+* `limit` (default: 100) - maximum number of results per page
+* `offset` - pagination offset
+
+#### Response
+
+* "count" - total number of items in the response
+* "next" - URL to the next page or `null` if this is the last page
+* "previous" - URL to the previous page or `null` if this is the first page
+* "results" - paginated data
+
+### Example response
+
+```json
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "logged_at": "2023-06-01T02:15:28.331086Z",
+            "event": {
+                "sent_at": "2023-06-01T02:15:23.435871Z",
+                "request": {
+                    "url": "https://example.com",
+                    "method": "POST",
+                    "content": "{}",
+                },
+                "response": null,
+                "error": "timed out"
+            }
+        }
+    ]
+}
+```
+
 ## List Active API keys
 
 [***Requires API key***](#api-key-authentication)
@@ -288,7 +340,9 @@ POST https://cloud.clarius.com/api/public/v0/services/api-keys/
 }
 ```
 
-Creates new API keys. Note: __it is not possible to retrieve the key after it's been created so store it somewhere safe.__
+Creates new API keys.
+
+⚠️ __It is not possible to retrieve the key after it's been created so store it somewhere safe.__
 
 ### Example Payload
 ```json
