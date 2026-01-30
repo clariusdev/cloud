@@ -58,9 +58,6 @@ Cloud APIs
     - [Response](#response-4)
   - [Token Based Authentication](#token-based-authentication)
 
-## Table of Contents
-
-
 # Service API
 
 ## User Setup
