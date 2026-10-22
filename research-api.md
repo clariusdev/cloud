@@ -35,7 +35,7 @@ Authorization: Token e11f11a11111d11bdca7e49e517534257d9da8801e539885eaacc111111
 ```bash
 POST https://cloud.clarius.com/api/public/v0/token-auth/
 {
-    "username": "<your username>"
+    "username": "<your username>",
     "password": "<your password>"
 }
 ```
@@ -55,6 +55,8 @@ Status codes
 
 
 ## Raw Data API
+
+[***Requires token***](#token-based-authentication)
 
 ⚠️ Links are valid for 7 days.
 
@@ -85,6 +87,8 @@ Status codes
 
 ## DICOM API
 
+[***Requires token***](#token-based-authentication)
+
 ⚠️ Links are valid for 7 days.
 
 ### Parameters
@@ -104,14 +108,14 @@ Status codes
 ```bash
 POST https://cloud.clarius.com/api/public/v0/exams/dicom/1
 {
-    "syntax": "jpeg ls lossless", 
-    "b_image_only": false, 
+    "syntax": "jpeg ls lossless",
+    "b_image_only": false,
     "resolution": "800x600",
     "include_annotations": true,
     "include_demographics": true,
     "include_measurements": false,
     "include_scan_parameters": false,
-    "demographics": ["PATIENT_NAME", "EXAM_DATE"]
+    "demographics": ["PATIENT_NAME", "EXAM_DATE"],
     "tz": "America/Toronto"
 }
 ```

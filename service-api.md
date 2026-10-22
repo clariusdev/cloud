@@ -78,7 +78,7 @@ To assist with integration and debugging, we log every time we call your webhook
 
 Upon receiving the notification, make sure to acknowledge it by responding with a 2xx status code. Later, asynchronously retrieve the data by following the download URL.
 
-⚠️ If you process the data synchronosly before responding to the notification, it can take a lot of time and the request might time out on our end. So, even if you've successfully received the notification, from our side it would look like a failure. Currently, we do not implement notification retries but, in the future, we might.
+⚠️ If you process the data synchronously before responding to the notification, it can take a lot of time and the request might time out on our end. So, even if you've successfully received the notification, from our side it would look like a failure. Currently, we do not implement notification retries but, in the future, we might.
 
 ### Notification payload
 
@@ -92,7 +92,7 @@ Notification payload contains the uploaded exam's UUID, ID of the customer who u
     "exam_uuid": "418c1f0f-4dd5-4c65-ae68-1fe8eccf46e5",
     "customer_id": "eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY",
     "download_url": "https://cloud.clarius.com/api/public/v0/download-requests/cf1b649c-428a-4cc2-b726-066f8a8c31a7/data/",
-    "submitted_at": "2022-10-22T03:10:47.231755Z",
+    "submitted_at": "2022-10-22T03:10:47.231755Z"
 }
 ```
 
@@ -141,8 +141,8 @@ Results can be filtered by query parameters:
             "exam_uuid": "440648a3-435f-4053-942b-17509c0787c1",
             "customer_id": "eYENW6HO4xdM0KlGO2kBXtTbD5XX1LTfdV-vYslapMY",
             "download_url": "https://cloud.clarius.com/api/public/v0/exams/download-requests/5ac5e0e3-92bd-4b55-8250-c03296a12872/data/",
-            "submitted_at": "2022-10-22T03:10:47.231755Z",
-        }
+            "submitted_at": "2022-10-22T03:10:47.231755Z"
+        },
         {
             "request_uuid": "8cc97ac4-ad8d-4fed-a70e-967703ebe521",
             "exam_uuid": "440648a3-435f-4053-942b-17509c0787c1",
@@ -339,7 +339,7 @@ Returns a paginated list of notification webhook records.
                 "request": {
                     "url": "https://example.com",
                     "method": "POST",
-                    "content": "{}",
+                    "content": "{}"
                 },
                 "response": null,
                 "error": "timed out"
